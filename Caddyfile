@@ -1,0 +1,11 @@
+0.0.0.0:2015
+log stdout
+errors stdout
+
+gzip
+
+browse
+
+root /var/www/html
+
+fastcgi / php:9000 php

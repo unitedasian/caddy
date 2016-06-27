@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+    php:
+        expose:
+            - 9000
+        image: php:7.0-fpm
+        networks:
+            - proxy
+        volumes:
+            - ./www:/var/www/html
+            - ./www.conf:/usr/local/etc/php-fpm.d/www.conf
+
+    caddy:
+        image: abiosoft/caddy
+        environment:
+            - "VIRTUAL_HOST=test.caddy.dev"
+            - "VIRTUAL_PORT=2015"
+        external_links:
+            - proxy
+        networks:
+            - proxy
+        ports:
+            - 8090:2015
+        volumes:
+            - ./Caddyfile:/etc/Caddyfile
+        volumes_from:
+            - php
+
+networks:
+    proxy:
+        external:
+            name: dev_default
