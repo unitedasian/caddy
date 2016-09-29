@@ -1,2 +1,2 @@
 build:
-	docker build -t devops/caddy .
+	docker build -t devops/caddy:latest .
