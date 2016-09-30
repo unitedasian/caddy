@@ -24,7 +24,6 @@ RUN ulimit -n 4096 \
         libicu-dev \
         libmcrypt-dev \
         openssh-client \
-        supervisor \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install \
