@@ -1,7 +1,7 @@
 FROM php:7-fpm
 MAINTAINER Olivier Pichon <op@united-asian.com>
 
-LABEL caddy_version="0.9.3" architecture="amd64"
+LABEL caddy_version="0.9.5" architecture="amd64"
 
 ARG plugins=expires,filemanager,git,locale,minify,realip
 
