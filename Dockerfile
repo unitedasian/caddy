@@ -46,6 +46,8 @@ RUN ulimit -n 4096 \
     && /usr/bin/caddy -version \
     && apt-get clean
 
+ENV PATH "/var/www/.composer/vendor/bin:$PATH"
+
 WORKDIR /var/www/html
 
 EXPOSE 80 443 2015
