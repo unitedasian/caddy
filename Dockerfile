@@ -43,7 +43,7 @@ RUN ulimit -n 4096 \
         | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version \
-    && apt-get clean  autoclean \
+    && apt-get clean autoclean \
     && apt-get autoremove -y \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
