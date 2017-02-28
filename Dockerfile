@@ -26,7 +26,6 @@ RUN ulimit -n 4096 \
         libmcrypt-dev \
         openssh-client \
         zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install \
         curl \
         intl \
@@ -44,7 +43,9 @@ RUN ulimit -n 4096 \
         | tar --no-same-owner -C /usr/bin/ -xz caddy \
     && chmod 0755 /usr/bin/caddy \
     && /usr/bin/caddy -version \
-    && apt-get clean
+    && apt-get clean  autoclean \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 ENV PATH "/var/www/.composer/vendor/bin:$PATH"
 
