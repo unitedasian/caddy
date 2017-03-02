@@ -24,6 +24,7 @@ RUN ulimit -n 4096 \
         libcurl4-gnutls-dev \
         libicu-dev \
         libmcrypt-dev \
+        locales \
         openssh-client \
         zlib1g-dev \
     && docker-php-ext-install \
