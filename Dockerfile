@@ -26,6 +26,7 @@ RUN ulimit -n 4096 \
         libcurl4-gnutls-dev \
         libicu-dev \
         libmcrypt-dev \
+        libpng12-dev \
         locales \
         nodejs \
         openssh-client \
