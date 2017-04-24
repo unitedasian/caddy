@@ -2,8 +2,6 @@ FROM php:7-fpm
 
 MAINTAINER Olivier Pichon <op@united-asian.com>
 
-LABEL caddy_version="0.9.5" architecture="amd64"
-
 ARG plugins=expires,filemanager,git,locale,minify,realip
 
 ARG timezone='Asia/Hong_Kong'
@@ -48,8 +46,7 @@ RUN ulimit -n 4096 \
         --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
         https://getcaddy.com \
         | bash -s http.cgi,http.cors,http.expires,http.filemanager,http.git,http.minify,http.realip \
-#    && chmod 0755 /usr/local/bin/caddy \
-    && ls /usr/local/bin/caddy \
+    && chmod 0755 /usr/local/bin/caddy \
     && /usr/local/bin/caddy -version \
     && apt-get clean autoclean \
     && apt-get autoremove -y \
@@ -61,6 +58,6 @@ WORKDIR /var/www/html
 
 EXPOSE 80 443 2015
 
-ENTRYPOINT ["/usr/bin/caddy"]
+ENTRYPOINT ["/usr/local/bin/caddy"]
 
 CMD ["--conf", "/etc/Caddyfile"]
