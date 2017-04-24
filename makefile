@@ -1,2 +1,2 @@
 build:
-	docker build -t devops/caddy:latest .
+	docker build -t untitedasian/caddy:local .
