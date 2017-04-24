@@ -46,10 +46,11 @@ RUN ulimit -n 4096 \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && curl --silent --show-error --fail --location \
         --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
-        "https://caddyserver.com/download/build?os=linux&arch=amd64&features=${plugins}" \
-        | tar --no-same-owner -C /usr/bin/ -xz caddy \
-    && chmod 0755 /usr/bin/caddy \
-    && /usr/bin/caddy -version \
+        https://getcaddy.com \
+        | bash -s http.cgi,http.cors,http.expires,http.filemanager,http.git,http.minify,http.realip \
+#    && chmod 0755 /usr/local/bin/caddy \
+    && ls /usr/local/bin/caddy \
+    && /usr/local/bin/caddy -version \
     && apt-get clean autoclean \
     && apt-get autoremove -y \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
