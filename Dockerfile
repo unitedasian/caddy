@@ -10,6 +10,8 @@ ARG memory_limit=-1
 
 COPY ./etc/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
 
+COPY ./etc/conf.d/ /usr/local/etc/php/conf.d/
+
 COPY Caddyfile /etc/Caddyfile
 
 COPY www/index.html /var/www/html/web/
@@ -36,6 +38,7 @@ RUN ulimit -n 4096 \
         curl \
         intl \
         mcrypt \
+        opcache \
         pdo_mysql \
         zip \
     && echo "date.timezone="$timezone > /usr/local/etc/php/conf.d/date_timezone.ini \
