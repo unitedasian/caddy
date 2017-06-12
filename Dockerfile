@@ -8,9 +8,11 @@ ARG timezone='Asia/Hong_Kong'
 
 ARG memory_limit=-1
 
+ARG PHP_INI_DIR=/usr/local/etc/php/conf.d
+
 COPY ./etc/php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
 
-COPY ./etc/conf.d/ /usr/local/etc/php/conf.d/
+COPY ./etc/conf.d/ /usr/local/etc/php
 
 COPY Caddyfile /etc/Caddyfile
 
@@ -41,8 +43,8 @@ RUN ulimit -n 4096 \
         opcache \
         pdo_mysql \
         zip \
-    && echo "date.timezone="$timezone > /usr/local/etc/php/conf.d/date_timezone.ini \
-    && echo "memory_limit="$memory_limit > /usr/local/etc/php/conf.d/memory_limit.ini \
+    && echo "date.timezone="$timezone > $PHP_INI_DIR/conf.d/date_timezone.ini \
+    && echo "memory_limit="$memory_limit > $PHP_INI_DIR/conf.d/memory_limit.ini \
     && usermod -u 1001 www-data \
     && chown -R www-data:www-data /var/www \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
@@ -52,6 +54,11 @@ RUN ulimit -n 4096 \
         | bash -s http.cgi,http.cors,http.expires,http.filemanager,http.git,http.minify,http.realip \
     && chmod 0755 /usr/local/bin/caddy \
     && /usr/local/bin/caddy -version \
+    && version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
+    && mv /tmp/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini
     && apt-get clean autoclean \
     && apt-get autoremove -y \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
