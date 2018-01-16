@@ -1,2 +1,2 @@
 build:
-	docker build -t untitedasian/caddy:local .
+	docker build -t unitedasian/caddy:local .

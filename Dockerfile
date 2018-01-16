@@ -26,6 +26,7 @@ RUN ulimit -n 4096 \
         build-essential \
         cron \
         git \
+        gnupg2 \
         libcurl4-gnutls-dev \
         libicu-dev \
         libmcrypt-dev \
